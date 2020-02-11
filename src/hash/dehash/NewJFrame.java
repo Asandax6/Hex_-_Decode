@@ -27,6 +27,9 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         return text.toString();
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -167,8 +170,36 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          
             String hex = jTextArea2.getText();
-            String text = toText(hex);
-            jTextArea1.setText(text);
+            
+            String fix = hex.toLowerCase();
+            char[] string = fix.toCharArray();
+            char[] chAr = {'a','b','c','d','e','f','0','1','2','3','4','5','6','7','8','9'};
+            StringBuilder hexAr = new StringBuilder();
+       
+            for(int i=0;i < string.length;i++){
+                for(int j=0;j < chAr.length;j++){
+                    if(chAr[j] == string[i]){
+                       hexAr.append(string[i]);
+                    }
+               }
+            }
+            if(!fix.equals(hexAr.toString())){
+                toast t = new toast("Invalid Hex",600,350);
+                t.showtoast();
+            }
+            else{
+                try{
+                    String text = toText(hexAr.toString());
+                    jTextArea1.setText(text);
+                }
+                catch(StringIndexOutOfBoundsException e){
+                    toast t = new toast("HEX is NOT a TEXT",600,350);
+                    t.showtoast();
+                }
+            }
+            
+            
+            
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -178,20 +209,16 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             
+
             String text = jTextArea1.getText();
             String hex = toHex(text);
             jTextArea2.setText(hex.toUpperCase());
+            
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -212,7 +239,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new NewJFrame().setVisible(true);
+            NewJFrame frame = new NewJFrame();
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
         });
     }
     
